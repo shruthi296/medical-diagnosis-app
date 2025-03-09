@@ -61,9 +61,16 @@ def main():
 
     elif choice == "Thyroid":
         st.header("Thyroid Disorder Prediction")
-        # Add input fields for thyroid disorder prediction
-        # Example: age, sex, TSH, T3, TT4, etc.
-        # input_data = ...
+        age = st.number_input("Age", 0, 100)
+        sex = st.selectbox("Sex", ["Male", "Female"])
+        tsh = st.number_input("TSH Level", 0.0, 10.0)
+        t3 = st.number_input("T3 Level", 0.0, 10.0)
+        tt4 = st.number_input("TT4 Level", 0.0, 300.0)
+        t4u = st.number_input("T4U Level", 0.0, 3.0)
+        fti = st.number_input("FTI Level", 0.0, 300.0)
+
+        input_data = pd.DataFrame([[age, sex, tsh, t3, tt4, t4u, fti]],
+                                 columns=['Age', 'Sex', 'TSH', 'T3', 'TT4', 'T4U', 'FTI'])
 
         if st.button("Predict"):
             prediction = thyroid_prediction(input_data)
@@ -74,9 +81,23 @@ def main():
 
     elif choice == "Lung Cancer":
         st.header("Lung Cancer Prediction")
-        # Add input fields for lung cancer prediction
-        # Example: age, smoking, yellow_fingers, anxiety, etc.
-        # input_data = ...
+        age = st.number_input("Age", 0, 100)
+        smoking = st.selectbox("Smoking", ["Yes", "No"])
+        yellow_fingers = st.selectbox("Yellow Fingers", ["Yes", "No"])
+        anxiety = st.selectbox("Anxiety", ["Yes", "No"])
+        peer_pressure = st.selectbox("Peer Pressure", ["Yes", "No"])
+        chronic_disease = st.selectbox("Chronic Disease", ["Yes", "No"])
+        fatigue = st.selectbox("Fatigue", ["Yes", "No"])
+        allergy = st.selectbox("Allergy", ["Yes", "No"])
+        wheezing = st.selectbox("Wheezing", ["Yes", "No"])
+        alcohol_consuming = st.selectbox("Alcohol Consuming", ["Yes", "No"])
+        coughing = st.selectbox("Coughing", ["Yes", "No"])
+        shortness_of_breath = st.selectbox("Shortness of Breath", ["Yes", "No"])
+        swallowing_difficulty = st.selectbox("Swallowing Difficulty", ["Yes", "No"])
+        chest_pain = st.selectbox("Chest Pain", ["Yes", "No"])
+
+        input_data = pd.DataFrame([[age, smoking, yellow_fingers, anxiety, peer_pressure, chronic_disease, fatigue, allergy, wheezing, alcohol_consuming, coughing, shortness_of_breath, swallowing_difficulty, chest_pain]],
+                                 columns=['Age', 'Smoking', 'YellowFingers', 'Anxiety', 'PeerPressure', 'ChronicDisease', 'Fatigue', 'Allergy', 'Wheezing', 'AlcoholConsuming', 'Coughing', 'ShortnessOfBreath', 'SwallowingDifficulty', 'ChestPain'])
 
         if st.button("Predict"):
             prediction = lung_cancer_prediction(input_data)
@@ -87,9 +108,31 @@ def main():
 
     elif choice == "Parkinson's":
         st.header("Parkinson's Disease Prediction")
-        # Add input fields for Parkinson's disease prediction
-        # Example: MDVP:Fo(Hz), MDVP:Fhi(Hz), MDVP:Flo(Hz), etc.
-        # input_data = ...
+        mdvp_fo = st.number_input("MDVP:Fo(Hz)", 0.0, 300.0)
+        mdvp_fhi = st.number_input("MDVP:Fhi(Hz)", 0.0, 300.0)
+        mdvp_flo = st.number_input("MDVP:Flo(Hz)", 0.0, 300.0)
+        mdvp_jitter_percent = st.number_input("MDVP:Jitter(%)", 0.0, 1.0)
+        mdvp_jitter_abs = st.number_input("MDVP:Jitter(Abs)", 0.0, 0.1)
+        mdvp_rap = st.number_input("MDVP:RAP", 0.0, 0.1)
+        mdvp_ppq = st.number_input("MDVP:PPQ", 0.0, 0.1)
+        jitter_ddp = st.number_input("Jitter:DDP", 0.0, 0.3)
+        mdvp_shimmer = st.number_input("MDVP:Shimmer", 0.0, 1.0)
+        mdvp_shimmer_db = st.number_input("MDVP:Shimmer(dB)", 0.0, 1.0)
+        shimmer_apq3 = st.number_input("Shimmer:APQ3", 0.0, 0.5)
+        shimmer_apq5 = st.number_input("Shimmer:APQ5", 0.0, 0.5)
+        mdvp_apq = st.number_input("MDVP:APQ", 0.0, 0.5)
+        shimmer_dda = st.number_input("Shimmer:DDA", 0.0, 1.5)
+        nhr = st.number_input("NHR", 0.0, 1.0)
+        hnr = st.number_input("HNR", 0.0, 50.0)
+        rpde = st.number_input("RPDE", 0.0, 1.0)
+        dfa = st.number_input("DFA", 0.0, 1.0)
+        spread1 = st.number_input("spread1", -10.0, 0.0)
+        spread2 = st.number_input("spread2", 0.0, 1.0)
+        d2 = st.number_input("D2", 0.0, 5.0)
+        ppe = st.number_input("PPE", 0.0, 1.0)
+
+        input_data = pd.DataFrame([[mdvp_fo, mdvp_fhi, mdvp_flo, mdvp_jitter_percent, mdvp_jitter_abs, mdvp_rap, mdvp_ppq, jitter_ddp, mdvp_shimmer, mdvp_shimmer_db, shimmer_apq3, shimmer_apq5, mdvp_apq, shimmer_dda, nhr, hnr, rpde, dfa, spread1, spread2, d2, ppe]],
+                                 columns=['MDVP:Fo(Hz)', 'MDVP:Fhi(Hz)', 'MDVP:Flo(Hz)', 'MDVP:Jitter(%)', 'MDVP:Jitter(Abs)', 'MDVP:RAP', 'MDVP:PPQ', 'Jitter:DDP', 'MDVP:Shimmer', 'MDVP:Shimmer(dB)', 'Shimmer:APQ3', 'Shimmer:APQ5', 'MDVP:APQ', 'Shimmer:DDA', 'NHR', 'HNR', 'RPDE', 'DFA', 'spread1', 'spread2', 'D2', 'PPE'])
 
         if st.button("Predict"):
             prediction = parkinsons_prediction(input_data)
