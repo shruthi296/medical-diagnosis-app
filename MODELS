@@ -1,0 +1,8 @@
+medical_diagnosis_app/
+│
+├── app.py
+├── diabetes_model.pkl
+├── thyroid_model.pkl
+├── lung_cancer_model.pkl
+├── parkinsons_model.pkl
+└── requirements.txt
