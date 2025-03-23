@@ -1,0 +1,5 @@
+Age,Smoking,YellowFingers,Anxiety,PeerPressure,ChronicDisease,Fatigue,Allergy,Wheezing,AlcoholConsuming,Coughing,ShortnessOfBreath,SwallowingDifficulty,ChestPain,Outcome
+45,Yes,No,Yes,No,Yes,No,No,Yes,No,Yes,No,No,Yes,1
+54,No,Yes,No,Yes,No,Yes,Yes,No,Yes,No,Yes,Yes,No,0
+60,Yes,Yes,Yes,Yes,No,Yes,No,Yes,No,Yes,Yes,No,Yes,1
+30,No,No,No,No,No,No,No,No,No,No,No,No,No,0

@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder
 
 # Load models
 def load_model(model_path):
@@ -10,19 +11,24 @@ def load_model(model_path):
 
 # Diabetes Prediction
 def diabetes_prediction(input_data):
-    model = load_model('diabetes_model.pkl')
+    model = load_model('diabetes_model.pkl')[0]
     prediction = model.predict(input_data)
     return prediction
 
 # Thyroid Prediction
 def thyroid_prediction(input_data):
-    model = load_model('thyroid_model.pkl')
-    prediction = model.predict(input_data)
+    model, encoder = load_model('thyroid_model.pkl')
+    preprocessed_data = preprocess_input(input_data, encoder)
+    prediction = model.predict(preprocessed_data)
     return prediction
 
 # Lung Cancer Prediction
 def lung_cancer_prediction(input_data):
     model = load_model('lung_cancer_model.pkl')
+    label_encoder = LabelEncoder()
+    categorical_columns = ['Smoking', 'YellowFingers', 'Anxiety', 'PeerPressure', 'ChronicDisease', 'Fatigue', 'Allergy', 'Wheezing', 'AlcoholConsuming', 'Coughing', 'ShortnessOfBreath', 'SwallowingDifficulty', 'ChestPain']
+    for column in categorical_columns:
+        input_data[column] = label_encoder.fit_transform(input_data[column])
     prediction = model.predict(input_data)
     return prediction
 
@@ -32,18 +38,30 @@ def parkinsons_prediction(input_data):
     prediction = model.predict(input_data)
     return prediction
 
+# Preprocess input data
+def preprocess_input(input_data, encoder):
+    df = pd.DataFrame(input_data)
+    df.columns = df.columns.str.lower()  # Convert feature names to lowercase
+    categorical_features = df.select_dtypes(include=['object']).columns
+    encoded_categorical_data = encoder.transform(df[categorical_features])
+    encoded_categorical_df = pd.DataFrame(encoded_categorical_data, columns=encoder.get_feature_names_out(categorical_features))
+    df = df.drop(categorical_features, axis=1)
+    df = pd.concat([df, encoded_categorical_df], axis=1)
+    return df
+
 # Main App
 def main():
     st.title("AI-Powered Medical Diagnosis")
     st.sidebar.title("Navigation")
-    st.markdown("""
+    bg_image = """
     <style>
-    .stApp {
-    background :url("https://www.google.com/url?sa=i&url=https%3A%2F%2Flovepik.com%2Fimages%2Fmedical-background.html&psig=AOvVaw2FjAT9s6E6JrJLZBkc5MTz&ust=1742034597390000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCOD6lN2uiYwDFQAAAAAdAAAAABAQ"
-    } no-repeat center fixed;
-    background-size : cover;
-    </style>
-    """, unsafe_allow_html=True)
+        .stApp {
+            background: url("https://img.freepik.com/free-vector/futuristic-science-lab-background_23-2148505015.jpg?t=st=1742035375~exp=1742038975~hmac=5511341db38707b2815c6d08abc8a7641985c1cde35cc523b63ba3b2db7b1d37&w=2000") no-repeat center fixed;
+            background-size: cover;
+        }
+    </style
+    """
+    st.markdown(bg_image,unsafe_allow_html=True)
     choice = st.sidebar.radio("Choose a Disease", ["Diabetes", "Thyroid", "Lung Cancer", "Parkinson's"])
 
     if choice == "Diabetes":
@@ -70,7 +88,7 @@ def main():
     elif choice == "Thyroid":
         st.header("Thyroid Disorder Prediction")
         age = st.number_input("Age", 0, 100)
-        sex = st.selectbox("Sex", ["Male", "Female"])
+        sex = st.selectbox("Sex", ["M", "F"])
         tsh = st.number_input("TSH Level", 0.0, 10.0)
         t3 = st.number_input("T3 Level", 0.0, 10.0)
         tt4 = st.number_input("TT4 Level", 0.0, 300.0)
